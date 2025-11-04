@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useEffect } from 'react';
 import { TRANSFORMATIONS } from './constants';
 import { editImage, generateVideo, generateImageFromText, generateImageEditsBatch } from './services/geminiService';
@@ -16,6 +15,7 @@ import { useTranslation } from './i18n/context';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import ThemeSwitcher from './components/ThemeSwitcher';
 import MultiImageGridUploader from './components/MultiImageGridUploader';
+import TosModal from './components/TosModal';
 
 type ActiveTool = 'mask' | 'none';
 type MobileView = 'input' | 'output';
@@ -66,6 +66,7 @@ const App: React.FC = () => {
   const [imageOptions, setImageOptions] = useState<string[] | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [mobileView, setMobileView] = useState<MobileView>('input');
+  const [isTosOpen, setIsTosOpen] = useState<boolean>(false);
   
   useEffect(() => {
     try {
@@ -787,10 +788,19 @@ const App: React.FC = () => {
           </div>
         )}
       </main>
-      <footer className="flex-shrink-0 text-center p-4 text-sm text-[var(--text-secondary)] border-t border-[var(--border-primary)]">
-        POWERED BY GOOGLE AND <a href="https://ilmedia.eu" target="_blank" rel="noopener noreferrer" className="font-semibold text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] hover:underline transition-colors">ilmedia.eu</a>
+      <footer className="flex-shrink-0 p-4 text-sm text-[var(--text-secondary)] border-t border-[var(--border-primary)]">
+        <div className="container mx-auto flex justify-center sm:justify-end items-center gap-2 text-center sm:text-left">
+          <div className="flex items-center gap-4 flex-wrap justify-center">
+             <a href="https://artrevenue.io/luxury_prompts_guide.html" target="_blank" rel="noopener noreferrer" className="font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:underline transition-colors">Master AI Model Creation</a>
+             <span className="text-[var(--text-tertiary)] hidden sm:inline">|</span>
+             <a href="https://ilmedia.eu" target="_blank" rel="noopener noreferrer" className="font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:underline transition-colors">ilmedia.eu</a>
+             <span className="text-[var(--text-tertiary)] hidden sm:inline">|</span>
+             <button onClick={() => setIsTosOpen(true)} className="font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:underline transition-colors">Terms of Service</button>
+          </div>
+        </div>
       </footer>
       <ImagePreviewModal imageUrl={previewImageUrl} onClose={handleClosePreview} />
+      <TosModal isOpen={isTosOpen} onClose={() => setIsTosOpen(false)} />
       <HistoryPanel
         isOpen={isHistoryPanelOpen}
         onClose={toggleHistoryPanel}
