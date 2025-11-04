@@ -15,7 +15,7 @@ import { useTranslation } from './i18n/context';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import ThemeSwitcher from './components/ThemeSwitcher';
 import MultiImageGridUploader from './components/MultiImageGridUploader';
-import TosModal from './components/TosModal';
+import TosModal from './components/TosModal.tsx';
 
 type ActiveTool = 'mask' | 'none';
 type MobileView = 'input' | 'output';
